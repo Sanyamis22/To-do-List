@@ -6,10 +6,9 @@ import CheckBox from '@react-native-community/checkbox';
 import {taskCompleted} from '@reduxjs/toolkit/dist/listenerMiddleware/exceptions';
 import {useDispatch, useSelector} from 'react-redux';
 import {createTasks, doneTasks} from '../../redux/action/TaskActions';
-import { changeStatus } from '../../redux/action/TaskActions';
-import { deleteTask } from '../../redux/action/TaskActions';
+import {changeStatus} from '../../redux/action/TaskActions';
+import {deleteTask} from '../../redux/action/TaskActions';
 const TaskCards = ({item, navigation}) => {
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const dispatch = useDispatch();
   // const taskCompleted = () => {
   //   {
@@ -20,48 +19,51 @@ const TaskCards = ({item, navigation}) => {
   const handleCheckbox = value => {
     const payload = {
       id: item.id,
-      status: value === true ? 'completed' : 'todo'
-  }
-  console.log('daa', payload)
+      status: value === true ? 'completed' : 'todo',
+    };
     dispatch(changeStatus(payload));
-  }
+  };
 
   const handleDelete = () => {
-    console.log('payload==>>',payload)
+    console.log('payload==>>', payload);
     const payload = {
       id: item.id,
-      
-  }
+    };
     dispatch(deleteTask(payload));
-  }
+  };
 
   return (
-    <View>
-      <TouchableOpacity>
-        <View style={styles.taskCards}>
-          <CheckBox
-            disabled={false}
-            value={item.status === 'completed' ? true : false}
-            onValueChange={handleCheckbox}
-            style={{marginLeft: 20, marginTop: 10}}
-          />
-          {/* <Text> {toggleCheckBox ? "👍" : "👎"} </Text> */}
+    <TouchableOpacity style={styles.taskCards}>
+      <CheckBox
+        disabled={false}
+        value={item.status === 'completed' ? true : false}
+        onValueChange={handleCheckbox}
+        style={{}}
+        tintColor={{true: 'red', false: 'green'}}
+      />
+      <View style={{justifyContent: 'center', marginLeft: 20}}>
+        <Text style={styles.text}> {item.enterTask} </Text>
+        <Text ellipsizeMode="tail" style={styles.desc}>
+          I'm going ZXy eveing
+        </Text>
+      </View>
 
-          <Text style={styles.text}> {item.enterTask} </Text>
-          {/* <Text style={styles.text}> {item.status} </Text> */}
-          <TouchableOpacity  onPress={handleDelete} >
-            <Icon
-              name="delete"
-              size={25}
-              color="#B1D0E0"
-              style={{marginRight: 20, marginTop: 15}}
-              
-              
-            />
-          </TouchableOpacity>
-        </View>
+      <TouchableOpacity
+        style={{
+          backgroundColor: '#c51910',
+          height: 30,
+          width: 30,
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: 50,
+          position: 'absolute',
+          top: -10,
+          right: -10,
+        }}
+        onPress={handleDelete}>
+        <Icon name="delete" size={13} color="white" />
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -70,30 +72,26 @@ export default TaskCards;
 const styles = StyleSheet.create({
   taskContainer: {},
   taskCards: {
+    flex: 1,
     backgroundColor: '#6998AB',
     flexDirection: 'row',
-
+    alignItems: 'center',
     marginHorizontal: 30,
-    borderRadius: 10,
-    marginTop: 10,
-    marginVertical: 20,
     borderColor: '#B1D0E0',
     borderWidth: 1,
-    height: 60,
+    height: 80,
+    marginBottom: 20,
+    paddingHorizontal: 10,
+    borderBottomEndRadius: 20,
+    borderTopLeftRadius: 20,
   },
   text: {
     fontSize: 22,
-    marginTop: 10,
-    //alignSelf: 'center',
     color: '#B1D0E0',
     fontWeight: 'bold',
-    flex: 1,
-    marginLeft: 10,
   },
   desc: {
-    fontSize: 18,
-    marginTop: 20,
-    alignSelf: 'center',
+    fontSize: 13,
     color: '#B1D0E0',
   },
 });

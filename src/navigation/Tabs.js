@@ -11,6 +11,7 @@ import Schedule from '../screens/Schedule';
 import Done from '../screens/Done';
 import TaskStack from './TaskStack';
 import { NavigationContainer } from '@react-navigation/native';
+import HeaderBar from './../component/atoms/HeaderBar';
 
 const Tab = createBottomTabNavigator();
 
@@ -38,11 +39,9 @@ const Tabs = () => {
       screenOptions={({route}) => ({
         headerStyle: {
           backgroundColor: '#406882',
+          height:60
         },
         headerTitleStyle: {
-          fontWeight: 'bold',
-          fontSize: 25,
-          color: '#fff',
         },
         headerLeftContainerStyle: {
           paddingLeft: 10,
@@ -50,17 +49,11 @@ const Tabs = () => {
         },
         tabBarStyle: {
           backgroundColor: '#406882',
-          shadow: {
-            shadowColor: '#7F5D50',
-            shadowOffset: {
-              width: 0,
-              height: 10,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.5,
-            elevation: 5,
-          },
+          height:60
+       
         },
+
+        headerLeft: () => <HeaderBar />,
         tabBarIcon: ({focused, color, size,}) => {
           if (route.name == 'Home') {
             return (
@@ -95,6 +88,7 @@ const Tabs = () => {
         name="Todays Schedule"
         component={Schedule}
         options={{
+          headerShown: false,
           tabBarLabel: 'Schedule',
           
         }}
@@ -103,6 +97,7 @@ const Tabs = () => {
         name="Done"
         component={Done}
         options={{
+          headerShown: false,
           tabBarLabel: 'Done',
          
         }}

@@ -20,13 +20,14 @@ import { NavigationContainer, useLinkBuilder } from '@react-navigation/native';
 import 'react-native-get-random-values'; 
 import {v4 as uuidv4} from 'uuid';
 
-const NewTask = () => {
+const NewTask = ({navigation}) => {
   const dispatch = useDispatch();
 
   const handleCreateNewTask = values => {
     const payload = {...values, status: 'todo' ,id: uuidv4()}
     console.log('uuid', payload)
     dispatch(createTasks(payload));
+    navigation.goBack();
   };
 
   return (
