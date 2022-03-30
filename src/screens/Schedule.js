@@ -61,10 +61,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#1A374D',
   },
   title: {
+    fontSize: 25,
+    alignContent: 'center',
+    marginHorizontal: 20,
     color: '#B1D0E0',
+    paddingTop: 20,
+    marginTop:20,
+    marginBottom:30,
     fontWeight: 'bold',
-    fontSize: 30,
-    margin: 30,
-    textAlign: 'center',
   },
 });

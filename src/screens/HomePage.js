@@ -17,35 +17,27 @@ import {fetchTasks} from '../redux/action/TaskActions';
 import TaskCards from '../component/molecule/TaskCards';
 
 const HomePage = ({navigation}) => {
-  
   const {allTasks} = useSelector(state => state.Task);
 
-  // const[todoList, settodoList] = useState([]); 
+  // const[todoList, settodoList] = useState([]);
 
   // useEffect(() => {
   //  const filteredTask = allTasks.filter();
   //  settodoList(filteredTask);
   // },[allTasks]);
-  
-
- 
-
-  
 
   const _renderProductItem = ({item}) => {
-    return <TaskCards item={item} navigation={navigation} 
-      
-     />;
+    return <TaskCards item={item} navigation={navigation} />;
   };
 
   const _renderHeader = () => {
     return (
       <View>
-        <View style={styles.headerBar}>
+        {/* <View style={styles.headerBar}>
           <Image style={styles.logo} source={require('./../assets/logo.png')} />
           <Text
             style={{
-              fontSize: 25,
+              fontSize: 20,
               fontWeight: 'bold',
               color: '#fff',
               marginTop: 20,
@@ -55,38 +47,26 @@ const HomePage = ({navigation}) => {
           </Text>
           <MaterialIconsIcon
             name="arrow-drop-down"
-            size={35}
+            size={20}
             color="black"
-            style={{marginTop: 18}}
+            style={{marginTop: 25}}
           />
           <Icon
             name="search1"
-            size={40}
+            size={30}
             color="#B1D0E0"
             style={{marginLeft: '30%', marginTop: 18}}
           />
           <EntypoIcon
             name="dots-three-vertical"
-            size={35}
+            size={30}
             color="#B1D0E0"
             style={{marginLeft: 10, marginTop: 20}}
           />
-        </View>
-        <View Style={styles.flexrow}>
-          <Text style={styles.heading}>  Today's schedule </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('NewTask')}>
-            <MaterialIconsIcon
-              name="add-circle"
-              size={75}
-              color="#fff"
-              style={{
-                marginLeft: '75%',
-               // marginBottom: '5%',
-                shadowColor: 'black',
-                opacity: 0.8,
-              }}
-            />
-          </TouchableOpacity>
+        </View> */}
+        <View style={styles.headContainer}>
+          <Image style={styles.logo} source={require('./../assets/logo.png')} />
+          <Text style={styles.heading}> Today's schedule </Text>
         </View>
       </View>
     );
@@ -94,13 +74,17 @@ const HomePage = ({navigation}) => {
 
   const _renderFooter = () => {
     return (
-      <View>
-       
-      </View>
+      <TouchableOpacity
+        style={{
+          position: 'absolute',
+          bottom: 20,
+          right: 10,
+        }}
+        onPress={() => navigation.navigate('NewTask')}>
+        <MaterialIconsIcon name="add-circle" size={75} color="#333" />
+      </TouchableOpacity>
     );
   };
-
-  
 
   return (
     <View style={styles.mainContainer}>
@@ -110,11 +94,11 @@ const HomePage = ({navigation}) => {
             data={allTasks}
             renderItem={_renderProductItem}
             keyExtractor={item => item.id}
-            ListFooterComponent={_renderFooter}
             ListHeaderComponent={_renderHeader}
           />
         </View>
       </View>
+      {_renderFooter()}
     </View>
   );
 };
@@ -127,16 +111,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#1A374D',
   },
   headerBar: {
-    flex: 0.15,
+    flex: 0,
     backgroundColor: '#406882',
     flexDirection: 'row',
     shadowColor: 'black',
   },
   logo: {
-    height: 50,
-    width: 50,
-    marginLeft: 5,
-    marginTop: 10,
+    height: 30,
+    width: 30,
+    marginLeft: 10,
+    position: 'absolute',
   },
   backImage: {
     flex: 1,
@@ -149,14 +133,39 @@ const styles = StyleSheet.create({
   },
 
   heading: {
-    fontSize: 30,
+    fontSize: 25,
     alignContent: 'center',
     marginHorizontal: 20,
     color: '#B1D0E0',
-     paddingTop: 20,
+    //paddingTop: 20,
+    // marginTop:20,
+    // marginBottom:30,
     fontWeight: 'bold',
   },
   flexrow: {
     flexDirection: 'row',
+  },
+  headContainer: {
+    backgroundColor: '#406882',
+    alignItems: 'center',
+    borderColor: '#B1D0E0',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    borderBottomLeftRadius: 40,
+    borderTopEndRadius: 40,
+    marginTop: 20,
+    marginHorizontal: 20,
+    marginBottom: 20,
+    height: 80,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    elevation: 10,
+    shadowColor: 'black',
+  },
+  logo: {
+    height: 35,
+    width: 35,
+    shadowOpacity: 0.9,
   },
 });
