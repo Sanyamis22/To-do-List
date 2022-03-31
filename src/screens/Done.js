@@ -3,6 +3,7 @@ import React from 'react'
 import  {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import TaskCards from '../component/molecule/TaskCards';
+import HeadingofScreens from '../component/atoms/HeadingofScreens';
 
 const Done = () => {
   const {allTasks} = useSelector(state => state.Task);
@@ -26,7 +27,9 @@ const Done = () => {
     const renderHeader = () => {
       return (
         <View>
-          <Text style={styles.title}> Done  </Text>
+           <HeadingofScreens 
+        heading= "Done"
+      />
         </View>
       );
     };
