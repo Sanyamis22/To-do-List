@@ -33,6 +33,7 @@ const ExtendedTextInput = ({
         {ionicIcons ? (
           <IoniconsIcon name={ionicIcons} size={25} color="#B1D0E0" />
         ) : null}
+        
       </View>
     </View>
   );

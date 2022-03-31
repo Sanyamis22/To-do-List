@@ -2,6 +2,7 @@ import {StyleSheet, Text, View, ImageBackground, FlatList} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import TaskCards from '../component/molecule/TaskCards';
+import HeadingofScreens from '../component/atoms/HeadingofScreens';
 
 const Schedule = () => {
   const {allTasks} = useSelector(state => state.Task);
@@ -27,7 +28,10 @@ const Schedule = () => {
   const renderHeader = () => {
     return (
       <View>
-        <Text style={styles.title}> Schedule </Text>
+      <HeadingofScreens 
+        heading= "Schedule"
+      />
+        {/* <Text style={styles.title}> Schedule </Text> */}
       </View>
     );
   };

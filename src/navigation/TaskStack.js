@@ -50,7 +50,7 @@ const TaskStack = () => {
           name="NewTask"
           component={NewTask}
           options={{
-            headerShown: true,
+            headerShown: false,
             title: 'Add Task',
           }}
         />

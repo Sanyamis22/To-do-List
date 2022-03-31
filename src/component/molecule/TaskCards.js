@@ -39,18 +39,19 @@ const TaskCards = ({item, navigation}) => {
         value={item.status === 'completed' ? true : false}
         onValueChange={handleCheckbox}
         style={{}}
-        tintColor={{true: 'red', false: 'green'}}
+        
+        tintColors={{true : '#1A374D'}}
       />
       <View style={{justifyContent: 'center', marginLeft: 20}}>
         <Text style={styles.text}> {item.enterTask} </Text>
         <Text ellipsizeMode="tail" style={styles.desc}>
-          I'm going ZXy eveing
+          {item.description}
         </Text>
       </View>
 
       <TouchableOpacity
         style={{
-          backgroundColor: '#c51910',
+          backgroundColor: '#8E0505',
           height: 30,
           width: 30,
           justifyContent: 'center',
@@ -93,5 +94,6 @@ const styles = StyleSheet.create({
   desc: {
     fontSize: 13,
     color: '#B1D0E0',
+    paddingLeft: 10,
   },
 });

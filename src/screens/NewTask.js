@@ -19,6 +19,13 @@ import fetchTasks, {createTasks} from './../redux/action/TaskActions';
 import { NavigationContainer, useLinkBuilder } from '@react-navigation/native';
 import 'react-native-get-random-values'; 
 import {v4 as uuidv4} from 'uuid';
+import HeadingofScreens from '../component/atoms/HeadingofScreens';
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object({
+  enterTask: Yup.string().required('Task is required!'),
+  
+});
 
 const NewTask = ({navigation}) => {
   const dispatch = useDispatch();
@@ -32,19 +39,26 @@ const NewTask = ({navigation}) => {
 
   return (
     <View style={styles.mainContainer}>
+     <View>
+           <HeadingofScreens 
+        heading= "Add Task Here"
+      />
+        </View>
       <View style={styles.formikContainer}>
         <Formik
           initialValues={{
             enterTask: '',
             description: '',
-            date: '',
-            time: '',
+            // date: '',
+            // time: '',
 
-            addList: '',
+            // addList: '',
           }}
+          validationSchema={validationSchema}
           onSubmit={values => handleCreateNewTask(values)}>
-          {({handleChange, handleBlur, handleSubmit, values}) => (
+          {({handleChange, handleBlur, handleSubmit, values,errors,touched}) => (
             <View>
+            
               <ExtendedTextInput
                 title="What is to be done ? "
                 onChangeText={handleChange('enterTask')}
@@ -52,6 +66,9 @@ const NewTask = ({navigation}) => {
                 value={values.enterTask}
                 placeholder="Enter Task Here"
               />
+              {errors.enterTask && touched.enterTask ? (
+                  <Text style={styles.error}>{errors.enterTask}</Text>
+                ) : null}
               <ExtendedTextInput
                 title="Description"
                 onChangeText={handleChange('description')}
@@ -59,7 +76,8 @@ const NewTask = ({navigation}) => {
                 value={values.description}
                 placeholder="Description please ?"
               />
-              <ExtendedTextInput
+               
+              {/* <ExtendedTextInput
                 title="Due Date"
                 onChangeText={handleChange('date')}
                 onBlur={handleBlur('date')}
@@ -75,9 +93,9 @@ const NewTask = ({navigation}) => {
                 value={values.time}
                 placeholder="Time not set"
                 ionicIcons="time-outline"
-              />
+              /> */}
 
-              <Text style={styles.title}> Add to List</Text>
+              {/* <Text style={styles.title}> Add to List</Text>
               <View style={styles.addList}>
                 <View style={styles.inputContainer}>
                   <TextInput
@@ -98,7 +116,7 @@ const NewTask = ({navigation}) => {
                   color="#B1D0E0"
                   style={{marginTop: 18, paddingLeft: 20}}
                 />
-              </View>
+              </View> */}
 
               <Ionicons
                 name="checkmark-done-circle"
@@ -143,7 +161,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#1A374D',
   },
-  formikContainer: {},
+  formikContainer: {
+    marginTop : 70,
+    marginLeft : 10,
+  },
   formik: {},
   input: {
     color: '#fff',
@@ -178,5 +199,13 @@ const styles = StyleSheet.create({
   },
   addList: {
     flexDirection: 'row',
+  },
+  error: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#8E0505',
+    marginHorizontal: 12,
+    textAlign: 'right',
+    padding: 10,
   },
 });
