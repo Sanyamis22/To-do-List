@@ -3,9 +3,11 @@ import {Appearance} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Navigation from './src/navigation/navigation';
 import { NavigationContainer } from '@react-navigation/native';
-import Tabs from './src/navigation/Tabs';
+import navigation from './src/navigation/navigation';
 import {Provider} from 'react-redux';
 import {store, persistor} from './src/store';
+import Tabs from './src/navigation/Tabs';
+import NavigationMain from './src/navigation/NavigationMain';
 
 
 const colorScheme = Appearance.getColorScheme();
@@ -37,7 +39,7 @@ if (colorScheme === 'light') {
 const App = () => {
   return (
     <Provider store={store}>
-     <Tabs />
+     <NavigationMain />
     </Provider>
   );
 };
