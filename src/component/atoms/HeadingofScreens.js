@@ -45,9 +45,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
       },
       logo: {
-        height: 35,
+        height: 40,
         width: 35,
         shadowOpacity: 0.9,
+        
       },
 
 })

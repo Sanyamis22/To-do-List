@@ -33,7 +33,7 @@ const Tabs = () => {
     //       ...styles.shadow
     //     },
     //   }}>
-    <NavigationContainer>
+    <NavigationContainer independent={true}>
     <Tab.Navigator
       initialRouteName="HomePage"
       screenOptions={({route}) => ({

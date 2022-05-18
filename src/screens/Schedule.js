@@ -29,7 +29,7 @@ const Schedule = () => {
     return (
       <View>
       <HeadingofScreens 
-        heading= "Schedule"
+        heading= "Pending"
       />
         {/* <Text style={styles.title}> Schedule </Text> */}
       </View>
