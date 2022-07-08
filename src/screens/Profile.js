@@ -1,29 +1,33 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import HeadingofScreens from '../component/atoms/HeadingofScreens';
+import {AuthContext} from '../navigation/AuthProvider';
 
 const Profile = () => {
+  const {user} = useContext(AuthContext);
   return (
     <View style={styles.container}>
       <HeadingofScreens heading="Profile" />
 
       <View style={styles.textContainer}>
-        <View style={{flexDirection: 'column', marginVertical : 15}}>
+        <View style={{flexDirection: 'column', marginVertical: 15}}>
           <Text style={styles.Headings}> Name : </Text>
-          <Text style={styles.subHeading}> Sanya Mishra </Text>
+          <Text style={styles.subHeading}> Rudransh Mishra </Text>
         </View>
-        <View style={{flexDirection: 'column', marginVertical : 15}}>
+        <View style={{flexDirection: 'column', marginVertical: 15}}>
           <Text style={styles.Headings}> E-mail : </Text>
-          <Text style={styles.subHeading}> sanyamishra@gmail.com </Text>
+          <Text style={styles.subHeading}> {user.email} </Text>
         </View>
-        <View style={{flexDirection: 'column' , marginVertical : 15}}>
+        <View style={{flexDirection: 'column', marginVertical: 15}}>
           <Text style={styles.Headings}> Semester : </Text>
           <Text style={styles.subHeading}> 8th </Text>
         </View>
-        <View style={{flexDirection: 'column', marginVertical : 15}}>
+        <View style={{flexDirection: 'column', marginVertical: 15}}>
           <Text style={styles.Headings}> College : </Text>
-          <Text style={styles.subHeading}> Chouskey Engineering College Bilaspur </Text>
-         
+          <Text style={styles.subHeading}>
+            {' '}
+            Chouskey Engineering College Bilaspur{' '}
+          </Text>
         </View>
       </View>
     </View>
@@ -48,6 +52,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     paddingTop: 5,
-    paddingLeft : 20,
+    paddingLeft: 20,
   },
 });

@@ -1,9 +1,13 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import LoginButton from '../component/atoms/LoginButton';
 import SquareButton from '../component/molecule/SquareButton';
+import {AuthContext} from '../navigation/AuthProvider';
+import PushNotification from 'react-native-push-notification';
 
 const Dashboard = ({navigation}) => {
+  const {user, logout} = useContext(AuthContext);
+
   return (
     <View style={styles.Container}>
       <Text style={styles.text}>
@@ -13,17 +17,38 @@ const Dashboard = ({navigation}) => {
         work.
       </Text>
       <View style={styles.arrangment}>
+        {/* <Text style={{color : 'white'}}> Welcome {user.uid}</Text>  */}
         <View style={styles.alignmentContainer1}>
-          <SquareButton title="Schedule" onPress={() => navigation.navigate('HomePage')}/>
-          <SquareButton title="Pending" onPress={() => navigation.navigate('Schedule')} />
+          <SquareButton
+            title="Schedule"
+            onPress={() => navigation.navigate('HomePage')}
+          />
+          <SquareButton
+            title="Pending"
+            onPress={() => navigation.navigate('Schedule')}
+          />
         </View>
         <View style={styles.alignmentContainer1}>
-          <SquareButton title="Done" onPress={() => navigation.navigate('Done')} />
-          <SquareButton title="Notify" onPress={() => navigation.navigate('Notify')} />
+          <SquareButton
+            title="Done"
+            onPress={() => navigation.navigate('Done')}
+          />
+          {/* <SquareButton
+            title="Notify"
+            onPress={() => navigation.navigate('Notify')}
+          /> */}
+
+          <SquareButton
+            title="About Us"
+            onPress={() => navigation.navigate('AboutUs')}
+          />
         </View>
         <View style={styles.alignmentContainer1}>
-          <SquareButton title="Profile" onPress={() => navigation.navigate('Profile')}/>
-          <SquareButton title="Logout" style={{}} />
+          <SquareButton
+            title="Profile"
+            onPress={() => navigation.navigate('Profile')}
+          />
+          <SquareButton title="Logout" onPress={() => logout()} />
         </View>
       </View>
     </View>
@@ -62,7 +87,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     alignSelf: 'center',
     justifyContent: 'center',
-    marginTop : 60,
-
+    marginTop: 60,
   },
 });

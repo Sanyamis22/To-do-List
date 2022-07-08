@@ -2,13 +2,14 @@ import React from 'react';
 import {Appearance} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Navigation from './src/navigation/navigation';
-import { NavigationContainer } from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import navigation from './src/navigation/navigation';
 import {Provider} from 'react-redux';
 import {store, persistor} from './src/store';
 import Tabs from './src/navigation/Tabs';
 import NavigationMain from './src/navigation/NavigationMain';
-
+import Routes from './src/navigation/Routes';
+import AuthProvider from './src/navigation/AuthProvider';
 
 const colorScheme = Appearance.getColorScheme();
 console.log('colorScheme', colorScheme);
@@ -38,9 +39,13 @@ if (colorScheme === 'light') {
 
 const App = () => {
   return (
-    <Provider store={store}>
-     <NavigationMain />
-    </Provider>
+  
+      <Provider store={store}>
+          <AuthProvider>
+            <Routes />
+          </AuthProvider>
+      </Provider>
+    
   );
 };
 
