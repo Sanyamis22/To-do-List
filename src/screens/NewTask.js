@@ -16,49 +16,95 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect} from 'react';
 import fetchTasks, {createTasks} from './../redux/action/TaskActions';
-import { NavigationContainer, useLinkBuilder } from '@react-navigation/native';
-import 'react-native-get-random-values'; 
+import {NavigationContainer, useLinkBuilder} from '@react-navigation/native';
+import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
 import HeadingofScreens from '../component/atoms/HeadingofScreens';
 import * as Yup from 'yup';
+import PushNotification from 'react-native-push-notification';
 
 const validationSchema = Yup.object({
   enterTask: Yup.string().required('Task is required!'),
-  
 });
 
 const NewTask = ({navigation}) => {
   const dispatch = useDispatch();
 
-  const handleCreateNewTask = values => {
-    const payload = {...values, status: 'todo' ,id: uuidv4()}
-    console.log('uuid', payload)
+  const handleCreateNewTask = (values, item) => {
+    const payload = {...values, status: 'todo', id: uuidv4()};
+    console.log('uuid', payload);
     dispatch(createTasks(payload));
     navigation.goBack();
+
+    PushNotification.localNotification({
+      channelId: 'channel-id',
+      title: 'Successfully',
+      message: 'Task has been created',
+      bigText:
+        'Yesterday is gone. Tomorrow has not yet come. We have only today. Let us begin',
+      color: '#1A374D',
+    });
+
+    PushNotification.localNotificationSchedule({
+      channelId: 'channel-id',
+      title: 'Alarm',
+      message: 'Task is pending . Please complete your task',
+      date: new Date(Date.now() + 20 * 1000),
+      allowWhileIdle: true,
+      color: '#1A374D',
+    });
+
+    PushNotification.localNotificationSchedule({
+      channelId: 'channel-id',
+      title: 'Alarm',
+      message: 'Task is pending . Please complete your task',
+      date: new Date(Date.now() + 40 * 1000),
+      allowWhileIdle: true,
+      color: '#1A374D',
+    });
+
+    PushNotification.localNotificationSchedule({
+      channelId: 'channel-id',
+      title: 'Alarm',
+      message: 'Task is still pending . Please make it fast',
+      date: new Date(Date.now() + 80 * 1000),
+      allowWhileIdle: true,
+      color: '#1A374D',
+    });
+
+    PushNotification.localNotificationSchedule({
+      channelId: 'channel-id',
+      title: 'Alarm',
+      message:
+        'yet, your task has not been completed . Please complete your task',
+      date: new Date(Date.now() + 100 * 1000),
+      allowWhileIdle: true,
+      color: '#1A374D',
+    });
   };
 
   return (
     <View style={styles.mainContainer}>
-     <View>
-           <HeadingofScreens 
-        heading= "Add Task Here"
-      />
-        </View>
+      <View>
+        <HeadingofScreens heading="Add Task Here" />
+      </View>
       <View style={styles.formikContainer}>
         <Formik
           initialValues={{
             enterTask: '',
             description: '',
-            // date: '',
-            // time: '',
-
-            // addList: '',
           }}
           validationSchema={validationSchema}
           onSubmit={values => handleCreateNewTask(values)}>
-          {({handleChange, handleBlur, handleSubmit, values,errors,touched}) => (
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+          }) => (
             <View>
-            
               <ExtendedTextInput
                 title="What is to be done ? "
                 onChangeText={handleChange('enterTask')}
@@ -67,8 +113,8 @@ const NewTask = ({navigation}) => {
                 placeholder="Enter Task Here"
               />
               {errors.enterTask && touched.enterTask ? (
-                  <Text style={styles.error}>{errors.enterTask}</Text>
-                ) : null}
+                <Text style={styles.error}>{errors.enterTask}</Text>
+              ) : null}
               <ExtendedTextInput
                 title="Description"
                 onChangeText={handleChange('description')}
@@ -76,7 +122,7 @@ const NewTask = ({navigation}) => {
                 value={values.description}
                 placeholder="Description please ?"
               />
-               
+
               {/* <ExtendedTextInput
                 title="Due Date"
                 onChangeText={handleChange('date')}
@@ -162,8 +208,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#1A374D',
   },
   formikContainer: {
-    marginTop : 70,
-    marginLeft : 10,
+    marginTop: 70,
+    marginLeft: 10,
   },
   formik: {},
   input: {

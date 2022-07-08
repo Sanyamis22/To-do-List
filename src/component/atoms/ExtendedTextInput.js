@@ -13,6 +13,11 @@ const ExtendedTextInput = ({
   icon,
   fonticon,
   ionicIcons,
+  labelValue,
+  KeyboardType,
+  autoCapitalize,
+  autoCorrect,
+  secureTextEntry,
 }) => {
   return (
     <View>
@@ -25,6 +30,12 @@ const ExtendedTextInput = ({
           onBlur={onBlur}
           value={value}
           placeholderTextColor={'#406882'}
+          labelValue={labelValue}
+          KeyboardType={KeyboardType}
+          autoCapitalize={autoCapitalize}
+            autoCorrect={autoCorrect}
+            secureTextEntry={secureTextEntry}
+
         />
         {icon ? <FontAwesomeIcon name={icon} size={25} color="#B1D0E0" /> : null}
         {fonticon ? (

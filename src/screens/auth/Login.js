@@ -1,10 +1,40 @@
-import {View, Text, Button, StyleSheet, Image, ScrollView} from 'react-native';
-import React from 'react';
+import {View, Text, Alert, StyleSheet, Image, ScrollView} from 'react-native';
+import React, {useContext, useEffect} from 'react';
 import {Formik} from 'formik';
 import ExtendedTextInput from '../../component/atoms/ExtendedTextInput';
 import LoginButton from '../../component/atoms/LoginButton';
+import {AuthContext} from '../../navigation/AuthProvider';
+import * as Yup from 'yup';
+import PushNotification from 'react-native-push-notification';
 
+const validationSchema = Yup.object({
+  email: Yup.string().email('Invalid email').required('Email is required!'),
+  password: Yup.string()
+    .trim()
+    .min(3, 'Password is too short!')
+    .required('Password is required!'),
+});
 const Login = ({navigation}) => {
+  useEffect(() => {
+    createChannels();
+  }, []);
+
+  const {login} = useContext(AuthContext);
+
+  const createChannels = () => {
+    PushNotification.createChannel({
+      channelId: 'channel-id', // (required)
+      channelName: 'My channel', // (required)
+    });
+  };
+
+  const handleLogin = values => {
+    login(values.email, values.password);
+
+    {
+      !login ? Alert.alert(' please register your account') : null;
+    }
+  };
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.heading}> LOGIN </Text>
@@ -15,8 +45,9 @@ const Login = ({navigation}) => {
         resizeMode="cover"></Image>
       <Formik
         initialValues={{email: '', password: ''}}
+        validationSchema={validationSchema}
         onSubmit={values => {
-         navigation.navigate('Dashboard');
+          handleLogin(values);
         }}>
         {({
           handleChange,
@@ -45,20 +76,14 @@ const Login = ({navigation}) => {
               onBlur={handleBlur('password')}
               value={values.password}
               placeholder="Enter your password here "
+              secureTextEntry={true}
             />
 
-            {errors.email && touched.email ? (
-              <Text style={styles.error}>{errors.email}</Text>
+            {errors.password && touched.password ? (
+              <Text style={styles.error1}>{errors.password}</Text>
             ) : null}
 
-            
-            <LoginButton
-              title='Login'
-              onPress={handleSubmit}
-              
-            />
-            
-            
+            <LoginButton title="Login" onPress={handleSubmit} />
           </View>
         )}
       </Formik>
@@ -84,7 +109,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#1A374D',
-    paddingHorizontal : 20
+    paddingHorizontal: 20,
   },
   heading: {
     fontSize: 35,
@@ -107,13 +132,12 @@ const styles = StyleSheet.create({
   inputcontainer: {
     // backgroundColor: '$light',
     // flexDirection: 'row',
-     marginHorizontal: 20,
+    marginHorizontal: 20,
     // marginVertical: 5,
     // borderRadius: 10,
     // alignItems: 'center',
     // paddingHorizontal: 5,
     // marginTop: 20,
-    
   },
 
   input: {
@@ -134,7 +158,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginTop: '30%',
     color: '#B1D0E0',
-    
   },
   logo: {
     marginTop: 30,
@@ -148,12 +171,12 @@ const styles = StyleSheet.create({
     // position: 'absolute',
   },
   word: {
-  // marginLeft : '60%',
-  fontSize : 15,
+    // marginLeft : '60%',
+    fontSize: 15,
     fontWeight: 'bold',
     color: '#B1D0E0',
     alignSelf: 'center',
-   // paddingTop : 20,
+    // paddingTop : 20,
   },
   error: {
     fontSize: 12,
@@ -165,6 +188,12 @@ const styles = StyleSheet.create({
   },
   error: {
     color: 'red',
-    marginLeft: 230,
+    marginLeft: 190,
+    paddingTop: 10,
+  },
+  error1: {
+    color: 'red',
+    marginLeft: 160,
+    paddingTop: 10,
   },
 });

@@ -1,10 +1,27 @@
 import {View, Text, Button, StyleSheet, Image, ScrollView} from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import {Formik} from 'formik';
 import ExtendedTextInput from '../../component/atoms/ExtendedTextInput';
 import LoginButton from '../../component/atoms/LoginButton';
+import {AuthContext} from '../../navigation/AuthProvider';
+import * as Yup from 'yup';
+const validationSchema = Yup.object({
+  email: Yup.string().email('Invalid email').required('Email is required!'),
+  name: Yup.string().required('Required'),
+  confirmPassword: Yup.string().required('Required'),
+  semester: Yup.string().required('Required'),
+  password: Yup.string()
+    .trim()
+    .min(3, 'Password is too short!')
+    .required('Password is required!'),
+});
 
 const Registration = ({navigation}) => {
+  const {register} = useContext(AuthContext);
+
+  const handleRegister = values => {
+    register(values.email, values.password);
+  };
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.heading}> SIGN UP </Text>
@@ -21,9 +38,8 @@ const Registration = ({navigation}) => {
           confirmPassword: '',
           semester: '',
         }}
-        onSubmit={values => {
-          console.log(values);
-        }}>
+        validationSchema={validationSchema}
+        onSubmit={values => handleRegister(values)}>
         {({
           handleChange,
           handleSubmit,
@@ -42,7 +58,7 @@ const Registration = ({navigation}) => {
             />
 
             {errors.name && touched.name ? (
-              <Text style={styles.error}>{errors.name}</Text>
+              <Text style={styles.normalError}>{errors.name}</Text>
             ) : null}
 
             <ExtendedTextInput
@@ -62,11 +78,12 @@ const Registration = ({navigation}) => {
               onChangeText={handleChange('password')}
               onBlur={handleBlur('password')}
               value={values.password}
+              secureTextEntry={true}
               placeholder="Enter your password here "
             />
 
-            {errors.email && touched.email ? (
-              <Text style={styles.error}>{errors.email}</Text>
+            {errors.password && touched.password ? (
+              <Text style={styles.error1}>{errors.password}</Text>
             ) : null}
 
             <ExtendedTextInput
@@ -74,11 +91,12 @@ const Registration = ({navigation}) => {
               onChangeText={handleChange('confirmPassword')}
               onBlur={handleBlur('confirmPassword')}
               value={values.confirmPassword}
+              secureTextEntry={true}
               placeholder="Confirm your password here "
             />
 
             {errors.confirmPassword && touched.confirmPassword ? (
-              <Text style={styles.error}>{errors.confirmPassword}</Text>
+              <Text style={styles.normalError}>{errors.confirmPassword}</Text>
             ) : null}
 
             <ExtendedTextInput
@@ -90,7 +108,7 @@ const Registration = ({navigation}) => {
             />
 
             {errors.semester && touched.semester ? (
-              <Text style={styles.error}>{errors.semester}</Text>
+              <Text style={styles.normalError}>{errors.semester}</Text>
             ) : null}
 
             <LoginButton title="Sign Up" onPress={handleSubmit} />
@@ -98,13 +116,9 @@ const Registration = ({navigation}) => {
         )}
       </Formik>
 
-      
-
       <Text style={styles.bottom}>
-      Already have an account?
-        <Text
-          onPress={() => navigation.navigate('Login')}
-          style={styles.bold}>
+        Already have an account?
+        <Text onPress={() => navigation.navigate('Login')} style={styles.bold}>
           Login
         </Text>{' '}
         here{' '}
@@ -143,7 +157,7 @@ const styles = StyleSheet.create({
     // backgroundColor: '$light',
     // flexDirection: 'row',
     marginHorizontal: 20,
-    paddingTop : 40,
+    paddingTop: 40,
     // marginVertical: 5,
     // borderRadius: 10,
     // alignItems: 'center',
@@ -163,12 +177,15 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: 'bold',
+    paddingLeft: 10,
   },
   bottom: {
     alignSelf: 'center',
     fontSize: 15,
     marginTop: '10%',
     color: '#B1D0E0',
+    paddingRight: 10,
+    marginBottom: 20,
   },
   logo: {
     marginTop: 30,
@@ -199,6 +216,17 @@ const styles = StyleSheet.create({
   },
   error: {
     color: 'red',
-    marginLeft: 230,
+    marginLeft: 190,
+    paddingTop: 10,
+  },
+  error1: {
+    color: 'red',
+    marginLeft: 160,
+    paddingTop: 10,
+  },
+  normalError: {
+    color: 'red',
+    marginLeft: 240,
+    paddingTop: 10,
   },
 });

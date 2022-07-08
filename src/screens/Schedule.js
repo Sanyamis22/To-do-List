@@ -1,8 +1,9 @@
-import {StyleSheet, Text, View, ImageBackground, FlatList} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import TaskCards from '../component/molecule/TaskCards';
 import HeadingofScreens from '../component/atoms/HeadingofScreens';
+import PushNotification from 'react-native-push-notification';
 
 const Schedule = () => {
   const {allTasks} = useSelector(state => state.Task);
@@ -13,24 +14,34 @@ const Schedule = () => {
     console.log('allTasks=>', allTasks);
     const filteredTask = allTasks.filter(item => {
       return item.status === 'todo';
-
     });
     console.log('filteredTask=>', filteredTask);
     settodoList(filteredTask);
   }, [allTasks]);
 
+  const handleNotification = item => {
+    PushNotification.localNotification({
+      channelId: 'test-channel',
+      title: 'you clicked on ' + item.enterTask,
+      message: item.enterTask,
+    });
+  };
+
   const renderItem = ({item}) => {
     return (
-    
-    <TaskCards item={item} />
-    )};
+      <TouchableOpacity
+        onPress={() => {
+          handleNotification();
+        }}>
+        <TaskCards item={item} />
+      </TouchableOpacity>
+    );
+  };
 
   const renderHeader = () => {
     return (
       <View>
-      <HeadingofScreens 
-        heading= "Pending"
-      />
+        <HeadingofScreens heading="Pending" />
         {/* <Text style={styles.title}> Schedule </Text> */}
       </View>
     );
@@ -70,8 +81,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     color: '#B1D0E0',
     paddingTop: 20,
-    marginTop:20,
-    marginBottom:30,
+    marginTop: 20,
+    marginBottom: 30,
     fontWeight: 'bold',
   },
 });
